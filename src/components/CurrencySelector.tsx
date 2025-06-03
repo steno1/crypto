@@ -1,18 +1,17 @@
-
 import { Form } from 'react-bootstrap';
 
 interface CurrencySelectorProps {
-  currency: string;
-  onCurrencyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
 }
 
-const CurrencySelector: React.FC<CurrencySelectorProps> = ({ currency, onCurrencyChange, className }) => (
+const CurrencySelector: React.FC<CurrencySelectorProps> = ({ value, onChange, className }) => (
   <Form.Select
     size="sm"
     className={className}
-    value={currency}
-    onChange={onCurrencyChange}
+    value={value}
+    onChange={onChange}
     aria-label="Select currency"
   >
     <option value="usd">USD</option>

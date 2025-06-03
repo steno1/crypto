@@ -1,20 +1,19 @@
-
 import { FormControl, InputGroup } from 'react-bootstrap';
 import styles from '../styles/Header.module.css';
 
 interface SearchBarProps {
-  searchTerm: string;
-  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearchChange, className }) => (
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, className }) => (
   <InputGroup className={className}>
     <FormControl
       type="text"
       placeholder="Search crypto..."
-      value={searchTerm}
-      onChange={onSearchChange}
+      value={value}
+      onChange={onChange}
       className={styles.searchInput}
     />
   </InputGroup>
