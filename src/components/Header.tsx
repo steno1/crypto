@@ -23,7 +23,7 @@ const Header: React.FC = () => {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-mode'); // define global styles for dark-mode
+    document.body.classList.toggle('dark-mode'); 
   };
 
   return (
@@ -38,12 +38,12 @@ const Header: React.FC = () => {
 
           {/* Desktop SearchBar */}
           <div className="d-none d-lg-flex">
-            <SearchBar value={searchTerm} onChange={handleSearchChange} />
+            <SearchBar value={searchTerm} onSearchChange={handleSearchChange} />
           </div>
 
           {/* Desktop Currency Selector */}
           <div className="ms-3 me-3 d-none d-lg-block">
-            <CurrencySelector value={currency} onChange={handleCurrencyChange} />
+            <CurrencySelector value={currency} onCurrencyChange={handleCurrencyChange} />
           </div>
 
           {/* Desktop DarkMode Toggle */}
