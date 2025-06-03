@@ -1,5 +1,4 @@
-// components/Header/LiveTicker.tsx
-import React from 'react';
+
 import styles from '../styles/Header.module.css';
 
 const LiveTicker: React.FC = () => {
