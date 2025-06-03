@@ -1,0 +1,65 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+
+  color: #e0e0e0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+
+#root, .App {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: #00ffd1;
+  transition: color 0.3s ease;
+}
+
+
+h1, h2, h3, h4, h5 {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 4px;
+}
+
+
+.navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
