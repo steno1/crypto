@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import styles from './home.module.css';
