@@ -11,19 +11,31 @@ const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
-  const handleCurrencyChange = (newCurrency: string) => {
-    setCurrency(newCurrency);
-    // TODO: update global state or API calls
-  };
-
+  // For desktop SearchBar - pass string directly
   const handleSearchChange = (newSearchTerm: string) => {
     setSearchTerm(newSearchTerm);
     // TODO: filter coins
   };
 
+  // For desktop CurrencySelector - pass string directly
+  const handleCurrencyChange = (newCurrency: string) => {
+    setCurrency(newCurrency);
+    // TODO: update global state or API calls
+  };
+
+  // For mobile SearchBar - event handler expects event
+  const handleMobileSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // For mobile CurrencySelector - event handler expects event
+  const handleMobileCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrency(e.target.value);
+  };
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-mode'); 
+    document.body.classList.toggle('dark-mode');
   };
 
   return (
@@ -38,20 +50,18 @@ const Header: React.FC = () => {
 
           {/* Desktop SearchBar */}
           <div className="d-none d-lg-flex">
-          <SearchBar
-  searchTerm={searchTerm}
-  onSearchChange={handleSearchChange}
-/>
-
+            <SearchBar
+              searchTerm={searchTerm}
+              onSearchChange={handleSearchChange}
+            />
           </div>
 
           {/* Desktop Currency Selector */}
           <div className="ms-3 me-3 d-none d-lg-block">
-         <CurrencySelector
-  selectedCurrency={currency}
-  onCurrencyChange={handleCurrencyChange}
-/>
-
+            <CurrencySelector
+              selectedCurrency={currency}
+              onCurrencyChange={handleCurrencyChange}
+            />
           </div>
 
           {/* Desktop DarkMode Toggle */}
@@ -74,12 +84,18 @@ const Header: React.FC = () => {
 
               {/* Mobile SearchBar */}
               <div className="mt-3 d-lg-none">
-                <SearchBar value={searchTerm} onChange={handleSearchChange} />
+                <SearchBar
+                  value={searchTerm}
+                  onChange={handleMobileSearchChange}
+                />
               </div>
 
               {/* Mobile Currency Selector */}
               <div className="mt-3 d-lg-none">
-                <CurrencySelector value={currency} onChange={handleCurrencyChange} />
+                <CurrencySelector
+                  value={currency}
+                  onChange={handleMobileCurrencyChange}
+                />
               </div>
 
               {/* Mobile DarkMode Toggle */}
