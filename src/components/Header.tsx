@@ -38,12 +38,20 @@ const Header: React.FC = () => {
 
           {/* Desktop SearchBar */}
           <div className="d-none d-lg-flex">
-            <SearchBar value={searchTerm} onSearchChange={handleSearchChange} />
+          <SearchBar
+  searchTerm={searchTerm}
+  onSearchChange={handleSearchChange}
+/>
+
           </div>
 
           {/* Desktop Currency Selector */}
           <div className="ms-3 me-3 d-none d-lg-block">
-            <CurrencySelector value={currency} onCurrencyChange={handleCurrencyChange} />
+         <CurrencySelector
+  selectedCurrency={currency}
+  onCurrencyChange={handleCurrencyChange}
+/>
+
           </div>
 
           {/* Desktop DarkMode Toggle */}
