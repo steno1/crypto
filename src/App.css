@@ -5,6 +5,17 @@
   box-sizing: border-box;
 }
 
+/* Define default (light mode) variables */
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --navbar-bg: #f8f9fa;
+  text-decoration: none;
+  --table-header-bg: #343a40;
+  --table-header-text: white;
+  --table-row-hover-bg: #f1f1f1;
+}
+
 
 body {
   font-family: 'Segoe UI', Roboto, sans-serif;
@@ -56,25 +67,15 @@ h1, h2, h3, h4, h5 {
 
 
 .navbar-toggler {
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(163, 149, 149, 0.5) !important;
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='gray' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+
 }
 
-/* App.css or global styles */
 
-/* Define default (light mode) variables */
-:root {
-  --bg-color: white;
-  --text-color: black;
-  --navbar-bg: #f8f9fa;
-  text-decoration: none;
-  --table-header-bg: #343a40;
-  --table-header-text: white;
-  --table-row-hover-bg: #f1f1f1;
-}
 
 /* Dark mode overrides */
 body.dark-mode {
