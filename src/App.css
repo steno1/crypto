@@ -9,7 +9,7 @@
 body {
   font-family: 'Segoe UI', Roboto, sans-serif;
 
-  color: #e0e0e0;
+  color: black;
   min-height: 100vh;
   line-height: 1.6;
 }
@@ -63,3 +63,86 @@ h1, h2, h3, h4, h5 {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
+/* App.css or global styles */
+
+/* Define default (light mode) variables */
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --navbar-bg: #f8f9fa;
+  text-decoration: none;
+  --table-header-bg: #343a40;
+  --table-header-text: white;
+  --table-row-hover-bg: #f1f1f1;
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --navbar-bg: #1f1f1f;
+
+  --table-header-bg: #212529;
+  --table-header-text: #f8f9fa;
+  --table-row-hover-bg: #2c2f33;
+  
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
+body, .homeContainer, .navbar {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
+.navbar {
+  background-color: var(--navbar-bg);
+}
+
+
+h1, h2, h3, h4, h5, h6, p, a {
+  color: var(--text-color);
+}
+
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+.homeContainer {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  
+}
+
+
+.cryptoTable thead {
+  background-color: var(--table-header-bg);
+  color: var(--table-header-text);
+}
+
+.cryptoTable tbody tr:hover {
+  background-color: var(--table-row-hover-bg);
+}
+
+
+.coinCard {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.coinCard:hover,
+.coinCard:focus {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  outline: none;
+}

@@ -79,6 +79,7 @@ const Home: React.FC = () => {
 
   return (
     <Container className={styles.homeContainer} fluid="md">
+      
       <h1 className="my-4 text-center">Top 50 Cryptocurrencies</h1>
 
       {loading && (

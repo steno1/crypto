@@ -1,6 +1,7 @@
 .homeContainer {
   padding-top: 2rem;
   padding-bottom: 1rem;
+  
 }
 
 .coinCard {
@@ -15,4 +16,9 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   outline: none;
 }
+
+
+
+
+
 

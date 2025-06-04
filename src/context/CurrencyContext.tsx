@@ -17,7 +17,7 @@ export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to use the currency context
+
 export const useCurrency = () => {
   const context = useContext(CurrencyContext);
   if (!context) {

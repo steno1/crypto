@@ -1,4 +1,4 @@
-/* Header.module.css */
+
 
 .navbar {
   background-color: rgba(15, 15, 30, 0.95);
@@ -7,6 +7,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   width: 100%;
   z-index: 1000;
+  text-decoration: none;
 }
 
 .navWrapper {
@@ -32,17 +33,19 @@
 }
 
 .navLink {
-  color: #cfcfcf !important;
+  color: rgb(123, 119, 119) !important;
   font-size: 1rem;
   font-weight: 500;
   margin-left: 1rem;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .navLink:hover {
   color: #00ffd1 !important;
   background-color: rgba(0, 255, 209, 0.1);
   border-radius: 6px;
+  text-decoration: none;
 }
 
 input[type="search"] {
@@ -83,9 +86,9 @@ input[type="search"]::placeholder {
 
 
 .modeToggleBtn {
-  padding: 0.25rem 0.6rem !important;  /* smaller padding */
-  font-size: 0.85rem !important;       /* smaller font */
-  min-width: 70px !important;          /* smaller min width */
+  padding: 0.25rem 0.6rem !important;  
+  font-size: 0.85rem !important;       
+  min-width: 70px !important;          
 }
 
 
