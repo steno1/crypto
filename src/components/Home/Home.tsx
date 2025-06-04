@@ -3,20 +3,21 @@ import { Container, Spinner, Alert } from 'react-bootstrap';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { useSearch } from '../../context/SearchContext';
 import styles from './home.module.css';
+import { useCurrency } from '../../context/CurrencyContext';
 
 interface Coin {
   id: string;
   symbol: string;
   name: string;
   image: string;
-  current_price: number;
+  current_price: number | null;
   market_cap_rank: number;
-  price_change_percentage_1h_in_currency?: number;
-  price_change_percentage_24h: number;
-  price_change_percentage_7d_in_currency?: number;
-  market_cap: number;
-  total_volume: number;
-  circulating_supply?: number;
+  price_change_percentage_1h_in_currency?: number | null;
+  price_change_percentage_24h: number | null;
+  price_change_percentage_7d_in_currency?: number | null;
+  market_cap: number | null;
+  total_volume: number | null;
+  circulating_supply?: number | null;
   sparkline_in_7d?: {
     price: number[];
   };
@@ -27,13 +28,14 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { searchTerm } = useSearch();
+  const { currency } = useCurrency();  
 
   useEffect(() => {
     const fetchCoins = async () => {
       try {
         setLoading(true);
         const res = await fetch(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,7d'
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,7d`
         );
         if (!res.ok) throw new Error('Failed to fetch coins');
         const data = await res.json();
@@ -46,12 +48,34 @@ const Home: React.FC = () => {
     };
 
     fetchCoins();
-  }, []);
+  }, [currency]);
 
   const filteredCoins = coins.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Helper function to format numbers safely
+  const formatNumber = (
+    value: number | null | undefined,
+    options?: Intl.NumberFormatOptions
+  ) => {
+    if (value == null) return 'N/A';
+    return value.toLocaleString(undefined, options);
+  };
+
+  // Helper to format price with currency symbol for USD or suffix for others
+  const formatPrice = (value: number | null | undefined) => {
+    if (value == null) return 'N/A';
+    if (currency.toUpperCase() === 'USD') return `$${formatNumber(value)}`;
+    return `${formatNumber(value)} ${currency.toUpperCase()}`;
+  };
+
+  // Helper to format percentage safely
+  const formatPercentage = (value: number | null | undefined) => {
+    if (value == null) return 'N/A';
+    return value.toFixed(2) + '%';
+  };
 
   return (
     <Container className={styles.homeContainer} fluid="md">
@@ -92,7 +116,7 @@ const Home: React.FC = () => {
             <tbody>
               {filteredCoins.map((coin) => (
                 <tr key={coin.id}>
-                  <td>{coin.market_cap_rank}</td>
+                  <td>{coin.market_cap_rank ?? 'N/A'}</td>
                   <td>
                     <img
                       src={coin.image}
@@ -104,31 +128,39 @@ const Home: React.FC = () => {
                   </td>
                   <td>{coin.name}</td>
                   <td>{coin.symbol.toUpperCase()}</td>
-                  <td>${coin.current_price.toLocaleString()}</td>
+                  <td>{formatPrice(coin.current_price)}</td>
                   <td
                     style={{
-                      color: (coin.price_change_percentage_1h_in_currency ?? 0) >= 0 ? 'green' : 'red',
+                      color:
+                        (coin.price_change_percentage_1h_in_currency ?? 0) >= 0
+                          ? 'green'
+                          : 'red',
                     }}
                   >
-                    {(coin.price_change_percentage_1h_in_currency ?? 0).toFixed(2)}%
-                  </td>
-                  <td style={{ color: coin.price_change_percentage_24h >= 0 ? 'green' : 'red' }}>
-                    {coin.price_change_percentage_24h.toFixed(2)}%
+                    {formatPercentage(coin.price_change_percentage_1h_in_currency)}
                   </td>
                   <td
                     style={{
-                      color: (coin.price_change_percentage_7d_in_currency ?? 0) >= 0 ? 'green' : 'red',
+                      color: (coin.price_change_percentage_24h ?? 0) >= 0 ? 'green' : 'red',
                     }}
                   >
-                    {(coin.price_change_percentage_7d_in_currency ?? 0).toFixed(2)}%
+                    {formatPercentage(coin.price_change_percentage_24h)}
                   </td>
-                  <td>${coin.market_cap.toLocaleString()}</td>
-                  <td>${coin.total_volume.toLocaleString()}</td>
+                  <td
+                    style={{
+                      color:
+                        (coin.price_change_percentage_7d_in_currency ?? 0) >= 0
+                          ? 'green'
+                          : 'red',
+                    }}
+                  >
+                    {formatPercentage(coin.price_change_percentage_7d_in_currency)}
+                  </td>
+                  <td>{formatPrice(coin.market_cap)}</td>
+                  <td>{formatPrice(coin.total_volume)}</td>
                   <td>
-                    {coin.circulating_supply
-                      ? `${coin.circulating_supply.toLocaleString(undefined, {
-                          maximumFractionDigits: 0,
-                        })} ${coin.symbol.toUpperCase()}`
+                    {coin.circulating_supply != null
+                      ? `${formatNumber(coin.circulating_supply, { maximumFractionDigits: 0 })} ${coin.symbol.toUpperCase()}`
                       : 'N/A'}
                   </td>
                   <td style={{ width: 100, minWidth: 100 }}>

@@ -5,11 +5,15 @@ import CurrencySelector from './CurrencySelector';
 import DarkModeToggle from './DarkModeToggle';
 import LiveTicker from './LiveTicker';
 import styles from "../styles/Header.module.css";
+import { useCurrency } from '../context/CurrencyContext';
 
 const Header: React.FC = () => {
-  const [currency, setCurrency] = useState('usd');
+  // Get currency and setter from context
+  const { currency, setCurrency } = useCurrency();
+
   const [darkMode, setDarkMode] = useState(false);
 
+  // Update context currency instead of local state
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrency(e.target.value);
   };
