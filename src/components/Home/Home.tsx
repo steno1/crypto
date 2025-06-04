@@ -1,6 +1,7 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
+import { useSearch } from '../../context/SearchContext';
 import styles from './home.module.css';
 
 interface Coin {
@@ -25,6 +26,7 @@ const Home: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { searchTerm } = useSearch();
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -45,6 +47,11 @@ const Home: React.FC = () => {
 
     fetchCoins();
   }, []);
+
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Container className={styles.homeContainer} fluid="md">
@@ -83,7 +90,7 @@ const Home: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {coins.map((coin) => (
+              {filteredCoins.map((coin) => (
                 <tr key={coin.id}>
                   <td>{coin.market_cap_rank}</td>
                   <td>
