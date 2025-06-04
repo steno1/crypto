@@ -22,9 +22,14 @@
 .brand {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #00ffd1 !important;
+   color: #00ffd1 !important;
   display: flex;
   align-items: center;
+  text-decoration: none !important;
+}
+.brand:hover{
+  color: #81c5b8 !important;
+  
 }
 
 .logoIcon {
@@ -42,7 +47,7 @@
 }
 
 .navLink:hover {
-  color: #00ffd1 !important;
+  color: #81c5b8 !important;
   background-color: rgba(0, 255, 209, 0.1);
   border-radius: 6px;
   text-decoration: none;
