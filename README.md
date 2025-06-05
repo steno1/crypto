@@ -46,7 +46,7 @@ Run the app locally:
 npm start
 # or
 yarn start
-Open your browser at http://localhost:3000 and start adding your crypto holdings!
+Open your browser at http://localhost:5173/ and start adding your crypto holdings!
 
 🧩 How it works
 On load, the app fetches the top 50 coins by market cap from CoinGecko
