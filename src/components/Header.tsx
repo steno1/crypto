@@ -56,10 +56,10 @@ const Header: React.FC = () => {
           <Navbar.Collapse id="navbar-nav">
             <Nav className="ms-auto align-items-lg-center">
               <Nav.Link href="/" className={styles.navLink}>Home</Nav.Link>
-              <Nav.Link href="/markets" className={styles.navLink}>Markets</Nav.Link>
+              <Nav.Link href="/" className={styles.navLink}>Markets</Nav.Link>
               <Nav.Link href="/portfolio" className={styles.navLink}>Portfolio</Nav.Link>
-              <Nav.Link href="/trending" className={styles.navLink}>Trending</Nav.Link>
-              <Nav.Link href="/price-history" className={styles.navLink}>Price History</Nav.Link>
+              <Nav.Link href="/" className={styles.navLink}>Trending</Nav.Link>
+              <Nav.Link href="/" className={styles.navLink}>Price History</Nav.Link>
 
               {/* Mobile SearchBar */}
               <div className="mt-3 d-lg-none">

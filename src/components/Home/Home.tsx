@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { useSearch } from '../../context/SearchContext';
-import styles from './home.module.css';
 import { useCurrency } from '../../context/CurrencyContext';
+import { Link } from 'react-router-dom';
+import styles from './home.module.css';
 
 interface Coin {
   id: string;
@@ -55,7 +56,6 @@ const Home: React.FC = () => {
     coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Helper function to format numbers safely
   const formatNumber = (
     value: number | null | undefined,
     options?: Intl.NumberFormatOptions
@@ -64,14 +64,12 @@ const Home: React.FC = () => {
     return value.toLocaleString(undefined, options);
   };
 
-  // Helper to format price with currency symbol for USD or suffix for others
   const formatPrice = (value: number | null | undefined) => {
     if (value == null) return 'N/A';
     if (currency.toUpperCase() === 'USD') return `$${formatNumber(value)}`;
     return `${formatNumber(value)} ${currency.toUpperCase()}`;
   };
 
-  // Helper to format percentage safely
   const formatPercentage = (value: number | null | undefined) => {
     if (value == null) return 'N/A';
     return value.toFixed(2) + '%';
@@ -79,7 +77,6 @@ const Home: React.FC = () => {
 
   return (
     <Container className={styles.homeContainer} fluid="md">
-      
       <h1 className="my-4 text-center">Top 50 Cryptocurrencies</h1>
 
       {loading && (
@@ -127,7 +124,11 @@ const Home: React.FC = () => {
                       style={{ verticalAlign: 'middle' }}
                     />
                   </td>
-                  <td>{coin.name}</td>
+                  <td>
+                    <Link to={`/coin/${coin.id}`} className={styles.coinLink}>
+                      {coin.name}
+                    </Link>
+                  </td>
                   <td>{coin.symbol.toUpperCase()}</td>
                   <td>{formatPrice(coin.current_price)}</td>
                   <td

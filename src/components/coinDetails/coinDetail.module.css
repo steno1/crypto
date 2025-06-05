@@ -1,0 +1,80 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.coinImage {
+  width: 64px;
+  height: 64px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.stats {
+  list-style: none;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.stats li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.chartTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+.chartContainer {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.15);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .stats li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

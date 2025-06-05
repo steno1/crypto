@@ -1,54 +1,73 @@
-# React + TypeScript + Vite
+# 📊 CryptoCap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and elegant **React + TypeScript** app to track your cryptocurrency investments using live data from the [CoinGecko API](https://www.coingecko.com/en/api).  
+Search coins, add your holdings in USD, and see live price updates and total portfolio value.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🔎 **Search** for the top 50 cryptocurrencies by market cap  
+- ➕ **Add holdings** by selecting a coin and investing USD amount  
+- 💰 **View live prices** and calculate coin amounts based on your investment  
+- 📈 **Track total portfolio value** in USD  
+- 🔗 URL support for direct linking with coinId query parameter (e.g. `/portfolio?coinId=bitcoin`)  
+- 🧩 Clean UI with CSS Modules and React functional components  
+- ⚡ Lightweight and fast with minimal dependencies  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- React (Functional Components + Hooks)  
+- TypeScript  
+- React Router (`useLocation`, `useNavigate`)  
+- CSS Modules for scoped styling  
+- CoinGecko API for live crypto data  
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🎯 Usage
+
+1. **Clone the repo:**
+
+   ```bash
+   git clone https://github.com/steno1/crypto.git
+   cd my-crypto-cap
+Install dependencies:
+
+
+npm install
+# or
+yarn install
+Run the app locally:
+
+
+npm start
+# or
+yarn start
+Open your browser at http://localhost:3000 and start adding your crypto holdings!
+
+🧩 How it works
+On load, the app fetches the top 50 coins by market cap from CoinGecko
+
+You can search coins by name or symbol and select one from the dropdown
+
+Enter the USD amount you've invested and add it to your portfolio
+
+The app fetches live prices and calculates how many coins you own for each holding
+
+Portfolio value updates live with the latest prices
+
+
+
+🤝 Contributing
+Contributions are welcome! Feel free to open issues or submit pull requests.
+Please ensure your code follows the existing style and includes relevant tests if applicable.
+
+
+
+🙏 Acknowledgments
+CoinGecko API for providing free crypto data
+
+Inspired by simple portfolio tracking needs and React best practices

@@ -1,0 +1,154 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.searchInput,
+.amountInput {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus,
+.amountInput:focus {
+  border-color: #007bff;
+}
+
+.dropdownList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  position: absolute;
+  top: 55px;
+  width: 100%;
+  z-index: 10;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dropdownItem {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdownItemSelected {
+  background-color: #00ffd1;
+  
+}
+
+.button {
+  padding: 0.75rem 1.2rem;
+  font-size: 1rem;
+  background-color: #1f7868;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #60bcab;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.loading {
+  color: #555;
+}
+
+.error {
+  color: red;
+}
+
+.table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table thead {
+  background-color: #f1f1f1;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.totalValue {
+  text-align: center; /* <-- Center the text */
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .form {
+    gap: 0.5rem;
+  }
+
+  .searchInput,
+  .amountInput,
+  .button {
+    font-size: 0.95rem;
+  }
+
+  .table th,
+  .table td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .totalValue {
+    font-size: 1rem;
+  }
+}
