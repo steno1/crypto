@@ -1,0 +1,30 @@
+.trendingContainer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.trendingTable {
+  width: 100%;
+  min-width: 600px;
+  font-size: 0.95rem;
+}
+
+.trendingTable img {
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.coinLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.coinLink:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.rank {
+  font-weight: bold;
+  color: #333;
+}

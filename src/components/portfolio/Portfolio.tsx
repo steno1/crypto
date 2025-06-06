@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; 
-import styles from './portfolio.module.css'; 
+import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './portfolio.module.css';
 
 interface CoinOption {
   id: string;
@@ -25,10 +25,12 @@ const Portfolio: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [editingCoinId, setEditingCoinId] = useState<string | null>(null);
+  const [editAmount, setEditAmount] = useState<string>('');
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Load holdings and selectedCoin from localStorage on mount
   useEffect(() => {
     const storedHoldings = localStorage.getItem('holdings');
     if (storedHoldings) {
@@ -42,20 +44,15 @@ const Portfolio: React.FC = () => {
     const storedSelectedCoin = localStorage.getItem('selectedCoin');
     if (storedSelectedCoin) {
       try {
-        setSelectedCoin(JSON.parse(storedSelectedCoin));
-        setSearchTerm(JSON.parse(storedSelectedCoin).name || '');
+        const parsed = JSON.parse(storedSelectedCoin);
+        setSelectedCoin(parsed);
+        setSearchTerm(parsed.name || '');
       } catch {
         console.warn('Failed to parse selectedCoin from localStorage');
       }
     }
   }, []);
 
-  
-  useEffect(() => {
-    localStorage.setItem('holdings', JSON.stringify(holdings));
-  }, [holdings]);
-
-  
   useEffect(() => {
     if (selectedCoin) {
       localStorage.setItem('selectedCoin', JSON.stringify(selectedCoin));
@@ -64,7 +61,6 @@ const Portfolio: React.FC = () => {
     }
   }, [selectedCoin]);
 
-  // Fetch coin options
   useEffect(() => {
     fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1')
       .then(res => res.json())
@@ -79,7 +75,6 @@ const Portfolio: React.FC = () => {
       .catch(() => setError('Failed to load coin list'));
   }, []);
 
-  // Detect coin from URL ?coinId=
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const coinIdFromUrl = queryParams.get('coinId');
@@ -89,14 +84,14 @@ const Portfolio: React.FC = () => {
       if (coin) {
         setSelectedCoin(coin);
         setSearchTerm(coin.name);
-        navigate('/portfolio', { replace: true }); 
+        navigate('/portfolio', { replace: true });
       } else {
         setError('Coin not found.');
       }
     }
   }, [coinOptions, location.search, navigate]);
 
-  
+  // ✅ Corrected: Fetch prices, then update and persist holdings
   useEffect(() => {
     if (holdings.length === 0) return;
 
@@ -122,6 +117,7 @@ const Portfolio: React.FC = () => {
         });
 
         setHoldings(updatedHoldings);
+        localStorage.setItem('holdings', JSON.stringify(updatedHoldings)); // ✅ Save after update
       } catch {
         setError('Failed to fetch prices');
       } finally {
@@ -130,19 +126,16 @@ const Portfolio: React.FC = () => {
     };
 
     fetchPrices();
-  }, [holdings.length]);
+  }, [holdings.length]); // use length to trigger only on add/delete
 
-  // Filter coins in dropdown
   const filteredOptions = coinOptions.filter(
     coin =>
       coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Show dropdown only if user is typing (searchTerm) and no coin is selected
   const showDropdown = searchTerm.length > 0 && !selectedCoin;
 
-  // Add coin to portfolio
   const addHolding = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -156,10 +149,48 @@ const Portfolio: React.FC = () => {
       return;
     }
 
-    setHoldings(prev => [...prev, { coinId: selectedCoin.id, investedUSD: Number(amount) }]);
+    const newHolding = { coinId: selectedCoin.id, investedUSD: Number(amount) };
+    const updated = [...holdings, newHolding];
+    setHoldings(updated);
     setSelectedCoin(null);
     setAmount('');
     setSearchTerm('');
+  };
+
+  const startEdit = (coinId: string, currentAmount: number) => {
+    setEditingCoinId(coinId);
+    setEditAmount(currentAmount.toString());
+  };
+
+  const cancelEdit = () => {
+    setEditingCoinId(null);
+    setEditAmount('');
+  };
+
+  const saveEdit = () => {
+    if (!editAmount || isNaN(Number(editAmount)) || Number(editAmount) <= 0) {
+      alert('Please enter a valid amount in USD.');
+      return;
+    }
+    const updated = holdings.map(h =>
+      h.coinId === editingCoinId
+        ? { ...h, investedUSD: Number(editAmount) }
+        : h
+    );
+    setHoldings(updated);
+    localStorage.setItem('holdings', JSON.stringify(updated)); // ✅ Save on edit
+    cancelEdit();
+  };
+
+  const deleteHolding = (coinId: string) => {
+    if (window.confirm('Are you sure you want to remove this holding?')) {
+      const updated = holdings.filter(h => h.coinId !== coinId);
+      setHoldings(updated);
+      localStorage.setItem('holdings', JSON.stringify(updated)); // ✅ Save on delete
+      if (editingCoinId === coinId) {
+        cancelEdit();
+      }
+    }
   };
 
   const totalPortfolioValue = holdings.reduce(
@@ -171,14 +202,14 @@ const Portfolio: React.FC = () => {
     <div className={styles.container}>
       <h2 className={styles.heading}>My Portfolio</h2>
 
-      <form onSubmit={addHolding} className={styles.form} style={{ position: 'relative' }}>
+      <form onSubmit={addHolding} className={`${styles.form} ${styles.positionRelative}`}>
         <input
           type="text"
           placeholder="Search coin..."
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            setSelectedCoin(null); 
+            setSelectedCoin(null);
           }}
           className={styles.searchInput}
           autoComplete="off"
@@ -192,7 +223,7 @@ const Portfolio: React.FC = () => {
                 className={styles.dropdownItem}
                 onClick={() => {
                   setSelectedCoin(coin);
-                  setSearchTerm(coin.name); 
+                  setSearchTerm(coin.name);
                 }}
               >
                 {coin.name} ({coin.symbol.toUpperCase()})
@@ -229,21 +260,74 @@ const Portfolio: React.FC = () => {
             <th>Amount (Coins)</th>
             <th>Price (USD)</th>
             <th>Invested (USD)</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {holdings.map(h => (
-            <tr key={h.coinId}>
-              <td>{coinOptions.find(c => c.id === h.coinId)?.symbol.toUpperCase() || h.coinId}</td>
-              <td>{h.coinAmount?.toFixed(6)}</td>
-              <td>${h.price?.toFixed(2)}</td>
-              <td>${h.investedUSD.toFixed(2)}</td>
-            </tr>
-          ))}
+          {holdings.map(h => {
+            const coin = coinOptions.find(c => c.id === h.coinId);
+            return (
+              <tr key={h.coinId}>
+                <td>{coin?.symbol.toUpperCase() || h.coinId}</td>
+                <td>{h.coinAmount?.toFixed(6)}</td>
+                <td>${h.price?.toFixed(2)}</td>
+                <td>
+                  {editingCoinId === h.coinId ? (
+                    <input
+                      type="number"
+                      step="any"
+                      value={editAmount}
+                      onChange={(e) => setEditAmount(e.target.value)}
+                      className={styles.amountInput}
+                    />
+                  ) : (
+                    `$${h.investedUSD.toFixed(2)}`
+                  )}
+                </td>
+                <td>
+                  {editingCoinId === h.coinId ? (
+                    <>
+                      <button
+                        type="button"
+                        className={`${styles.actionButton} ${styles.saveButton}`}
+                        onClick={saveEdit}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className={`${styles.actionButton} ${styles.cancelButton}`}
+                        onClick={cancelEdit}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        className={`${styles.actionButton} ${styles.editButton}`}
+                        onClick={() => startEdit(h.coinId, h.investedUSD)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className={`${styles.actionButton} ${styles.deleteButton}`}
+                        onClick={() => deleteHolding(h.coinId)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
-      <h3 className={styles.totalValue} style={{ textAlign: 'center', marginTop: '1rem' }}>
+      <h3 className={`${styles.totalValue} ${styles.textCenter} ${styles.marginTop}`}>
         Total Portfolio Value: ${totalPortfolioValue.toFixed(2)}
       </h3>
     </div>

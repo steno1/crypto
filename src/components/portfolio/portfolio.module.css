@@ -8,6 +8,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
 .heading {
   text-align: center;
   font-size: 2rem;
@@ -24,6 +25,8 @@
 
 .searchInput,
 .amountInput {
+  width: 100%;
+  box-sizing: border-box; 
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -66,14 +69,15 @@
 
 .dropdownItemSelected {
   background-color: #00ffd1;
-  
 }
 
 .button {
+   width: 100%;
   padding: 0.75rem 1.2rem;
   font-size: 1rem;
   background-color: #1f7868;
   color: white;
+   box-sizing: border-box;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -122,7 +126,7 @@
 }
 
 .totalValue {
-  text-align: center; /* <-- Center the text */
+  text-align: center;
   margin-top: 1.5rem;
   font-size: 1.2rem;
   font-weight: bold;
@@ -130,7 +134,59 @@
 }
 
 
-/* Responsive tweaks */
+.actionButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-weight: 600;
+  min-width: 70px;
+  margin: 0 0.25rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+.editButton {
+  background-color: #4caf50; 
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #45a049;
+}
+
+.deleteButton {
+  background-color: #e74c3c; 
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.saveButton {
+  margin-bottom: 10px;
+  background-color: #007bff; 
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #0056b3;
+}
+
+
+.cancelButton {
+  background-color: #6c757d; 
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive css for mobile */
 @media (max-width: 600px) {
   .form {
     gap: 0.5rem;
@@ -140,6 +196,7 @@
   .amountInput,
   .button {
     font-size: 0.95rem;
+       width: 100%; 
   }
 
   .table th,
@@ -151,4 +208,33 @@
   .totalValue {
     font-size: 1rem;
   }
+
+
+  .table th,
+  .table td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .totalValue {
+    font-size: 1rem;
+  }
 }
+
+
+.actionButton {
+  min-width: 70px;
+  margin: 0 0.25rem 0.5rem 0.25rem;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 400px) {
+  .actionButton {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.5rem 0;
+  }
+}
+
